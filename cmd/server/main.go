@@ -23,7 +23,7 @@ func main() {
 	user := models.User{
 		Email:        "test1@gmail.com",
 		PasswordHash: "test-password",
-		Role:         "",
+		Role:         "customer",
 	}
 
 	err := userRepo.CreateUser(context.Background(), &user)

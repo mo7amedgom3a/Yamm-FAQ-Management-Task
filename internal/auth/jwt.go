@@ -17,6 +17,7 @@ func GenerateToken(user *models.User, cfg *config.Config) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"user_id": user.ID,
 		"email":   user.Email,
+		"role":    user.Role,
 		"exp":     time.Now().Add(time.Duration(expirationTime)).Unix(),
 	})
 	tokenString, err := token.SignedString(JWTKey)
