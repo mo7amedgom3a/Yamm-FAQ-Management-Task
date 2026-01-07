@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/scripts"
+)
 
 func main() {
-	fmt.Println("hello")
+	fmt.Println("seed admin user")
+	scripts.SeedAdmin()
 }
