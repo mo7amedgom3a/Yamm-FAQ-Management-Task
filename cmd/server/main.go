@@ -21,9 +21,9 @@ func main() {
 
 	// test user reposito
 	user := models.User{
-		Email:        "test1@gmail.com",
+		Email:        "test4@gmail.com",
 		PasswordHash: "test-password",
-		Role:         "customer",
+		Role:         "merchant",
 	}
 
 	err := userRepo.CreateUser(context.Background(), &user)
@@ -38,4 +38,12 @@ func main() {
 		return
 	}
 	fmt.Println("Generated token:", token)
+
+	err = auth.VerifyToken(token, cfg)
+	if err != nil {
+		fmt.Println("Error verifying token:", err)
+		return
+	}
+	fmt.Println("Token verified successfully")
+
 }
