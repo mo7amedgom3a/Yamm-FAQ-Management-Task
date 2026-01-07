@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"gorm.io/gorm"
 )
 
 type UserRole string
@@ -24,4 +25,14 @@ type User struct {
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+func (u *User) BeforeCreate(tx *gorm.DB) (err error) {
+	if u.ID == uuid.Nil {
+		u.ID = uuid.New()
+	}
+	if u.Role == "" {
+		u.Role = RoleCustomer
+	}
+	return
 }
