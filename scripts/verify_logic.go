@@ -1,4 +1,4 @@
-package main
+package scripts
 
 import (
 	"context"
@@ -17,7 +17,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func main() {
+func TestLogic() {
 	// 1. Setup DB
 	cfg := config.LoadConfig()
 	// Hardcoding missing config fields for verification script or using defaults

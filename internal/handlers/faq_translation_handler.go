@@ -43,7 +43,7 @@ func (h *FAQTranslationHandler) GetTranslation(c *gin.Context) {
 }
 
 func (h *FAQTranslationHandler) GetTranslationsByFAQID(c *gin.Context) {
-	faqID := c.Param("faq_id")
+	faqID := c.Param("id")
 	res, err := h.translationService.GetTranslationsByFAQID(c.Request.Context(), faqID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

@@ -87,6 +87,9 @@ func (s *faqService) UpdateFAQ(ctx context.Context, id string, req dto.CreateFAQ
 	model := s.mapper.ToModel(req)
 	model.ID = faq.ID
 	model.CreatedAt = faq.CreatedAt
+	model.StoreID = faq.StoreID
+	model.IsGlobal = faq.IsGlobal
+	model.CreatedBy = faq.CreatedBy
 
 	err = s.repo.UpdateFaq(ctx, model)
 	if err != nil {
