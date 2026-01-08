@@ -21,7 +21,7 @@ func main() {
 
 	// test user reposito
 	user := models.User{
-		Email:        "test4@gmail.com",
+		Email:        "test6@gmail.com",
 		PasswordHash: "test-password",
 		Role:         "merchant",
 	}
@@ -45,5 +45,12 @@ func main() {
 		return
 	}
 	fmt.Println("Token verified successfully")
+	fmt.Println("Extracted claims ...")
+	claims, err := auth.ExtractClaims(token, cfg)
+	if err != nil {
+		fmt.Println("Error extracting claims:", err)
+		return
+	}
+	fmt.Println("Extracted claims:", claims["user_id"])
 
 }

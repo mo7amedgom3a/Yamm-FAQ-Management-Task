@@ -11,8 +11,8 @@ import (
 type FaqTranslationRepository interface {
 	CreateFaqTranslation(ctx context.Context, faqTranslation models.FAQTranslation) error
 	FindFaqTranslationByID(ctx context.Context, id uuid.UUID) (models.FAQTranslation, error)
-	FindFaqTranslationByFaqID(ctx context.Context, faqID uuid.UUID) (models.FAQTranslation, error)
-	FindFaqTranslationByLanguage(ctx context.Context, language string) (models.FAQTranslation, error)
+	FindFaqTranslationByFaqID(ctx context.Context, faqID uuid.UUID) ([]models.FAQTranslation, error)
+	FindFaqTranslationByLanguage(ctx context.Context, language string) ([]models.FAQTranslation, error)
 	FindByFAQAndLanguage(ctx context.Context, faqID uuid.UUID, language string) (models.FAQTranslation, error)
 	UpdateFaqTranslation(ctx context.Context, faqTranslation models.FAQTranslation) error
 	DeleteFaqTranslation(ctx context.Context, id uuid.UUID) error
@@ -37,19 +37,19 @@ func (r *faqTranslationRepository) FindFaqTranslationByID(ctx context.Context, i
 	return faqTranslation, nil
 }
 
-func (r *faqTranslationRepository) FindFaqTranslationByFaqID(ctx context.Context, faqID uuid.UUID) (models.FAQTranslation, error) {
-	var faqTranslation models.FAQTranslation
-	if err := r.db.WithContext(ctx).Where("faq_id = ?", faqID).First(&faqTranslation).Error; err != nil {
-		return faqTranslation, err
+func (r *faqTranslationRepository) FindFaqTranslationByFaqID(ctx context.Context, faqID uuid.UUID) ([]models.FAQTranslation, error) {
+	var faqTranslations []models.FAQTranslation
+	if err := r.db.WithContext(ctx).Where("faq_id = ?", faqID).Find(&faqTranslations).Error; err != nil {
+		return nil, err
 	}
-	return faqTranslation, nil
+	return faqTranslations, nil
 }
-func (r *faqTranslationRepository) FindFaqTranslationByLanguage(ctx context.Context, language string) (models.FAQTranslation, error) {
-	var faqTranslation models.FAQTranslation
-	if err := r.db.WithContext(ctx).Where("language = ?", language).First(&faqTranslation).Error; err != nil {
-		return faqTranslation, err
+func (r *faqTranslationRepository) FindFaqTranslationByLanguage(ctx context.Context, language string) ([]models.FAQTranslation, error) {
+	var faqTranslations []models.FAQTranslation
+	if err := r.db.WithContext(ctx).Where("language = ?", language).Find(&faqTranslations).Error; err != nil {
+		return nil, err
 	}
-	return faqTranslation, nil
+	return faqTranslations, nil
 }
 func (r *faqTranslationRepository) FindByFAQAndLanguage(ctx context.Context, faqID uuid.UUID, language string) (models.FAQTranslation, error) {
 	var faqTranslation models.FAQTranslation
