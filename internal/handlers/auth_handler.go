@@ -40,7 +40,6 @@ func (h *AuthHandler) Register(c *gin.Context) {
 		Password: req.Password,
 	})
 	if err != nil {
-		// Should not happen if register succeeded, but handle it
 		c.JSON(http.StatusOK, gin.H{"user": res, "message": "User registered but auto-login failed", "error": err.Error()})
 		return
 	}

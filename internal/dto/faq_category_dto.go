@@ -1,11 +1,11 @@
 package dto
 
 type CreateFAQCategoryRequest struct {
-	Name string
+	Name string `json:"name"`
 }
 
 type FAQCategoryResponse struct {
-	ID   string
-	Name string
-	FAQs []FAQResponse
+	ID   string        `json:"id"`
+	Name string        `json:"name"`
+	FAQs []FAQResponse `json:"faqs"`
 }

@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,11 +28,11 @@ func (h *FAQHandler) CreateFAQ(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	fmt.Printf("DEBUG: CreateFAQRequest: %+v\n", req)
 
 	userID, _ := c.Get(middleware.ContextUserIDKey)
 	req.CreatedBy = userID.(string)
 
-	// If merchant, ensure StoreID is set to their store
 	role, _ := c.Get(middleware.ContextUserRoleKey)
 	if role == "merchant" {
 		store, err := h.storeService.GetStoreByMerchantID(c.Request.Context(), userID.(string))
@@ -44,11 +45,12 @@ func (h *FAQHandler) CreateFAQ(c *gin.Context) {
 
 	res, err := h.faqService.CreateFAQ(c.Request.Context(), req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 
-	c.JSON(http.StatusCreated, res)
+		c.JSON(http.StatusCreated, res)
+
 }
 
 func (h *FAQHandler) GetFAQ(c *gin.Context) {

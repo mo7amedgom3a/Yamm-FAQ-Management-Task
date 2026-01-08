@@ -33,12 +33,9 @@ func (h *UserHandler) GetMe(c *gin.Context) {
 }
 
 func (h *UserHandler) DeleteUser(c *gin.Context) {
-	// Admin can delete any user, or user can delete themselves?
-	// For now, let's implement delete self or admin delete by ID.
-	// The route param will decide.
+	
 	id := c.Param("id")
 	if id == "" {
-		// If no ID, delete self?
 		userID, _ := c.Get(middleware.ContextUserIDKey)
 		id = userID.(string)
 	}

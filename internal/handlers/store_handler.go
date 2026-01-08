@@ -41,7 +41,6 @@ func (h *StoreHandler) UpdateStore(c *gin.Context) {
 		return
 	}
 
-	// First get the store to make sure it belongs to the user
 	store, err := h.storeService.GetStoreByMerchantID(c.Request.Context(), userID.(string))
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "store not found"})
@@ -53,7 +52,6 @@ func (h *StoreHandler) UpdateStore(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	// Ensure merchant ID is not changed or is set correctly
 	merchantID, err := uuid.Parse(userID.(string))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "invalid user id"})

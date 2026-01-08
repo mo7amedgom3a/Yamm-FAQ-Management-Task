@@ -11,7 +11,11 @@ import (
 type Config struct {
 	DBName            string
 	DBHost            string
+	DBUser            string
 	DBPassword        string
+	DBPort            string
+	ServerPort        string
+	DebugMode         string
 	AdminEmail        string
 	AdminPassword     string
 	JWTSecret         string
@@ -30,7 +34,11 @@ func LoadConfig() *Config {
 	return &Config{
 		DBName:            os.Getenv("DB_NAME"),
 		DBHost:            os.Getenv("DB_HOST"),
+		DBUser:            os.Getenv("DB_USER"),
+		ServerPort:        os.Getenv("SERVER_PORT"),
+		DebugMode:         os.Getenv("DEBUG_MODE"),
 		DBPassword:        os.Getenv("DB_PASSWORD"),
+		DBPort:            os.Getenv("DB_PORT"),
 		AdminEmail:        os.Getenv("ADMIN_EMAIL"),
 		AdminPassword:     os.Getenv("ADMIN_PASSWORD"),
 		JWTSecret:         os.Getenv("JWT_SECRET"),

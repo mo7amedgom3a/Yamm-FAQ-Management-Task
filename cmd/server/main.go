@@ -1,56 +1,31 @@
 package main
 
 import (
-	"context"
 	"fmt"
+	"log"
 
-	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/auth"
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/config"
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/database"
-	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/models"
-	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/repositories"
+	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/routes"
 )
 
 func main() {
-	// fmt.Println("seed admin user")
-	// scripts.SeedAdmin()
-
+	// Load Config
 	cfg := config.LoadConfig()
+
+	// Connect to Database
 	database.ConnectDB(cfg)
-	userRepo := repositories.NewUserRepository(database.DB)
+	db := database.DB
 
-	// test user reposito
-	user := models.User{
-		Email:        "test6@gmail.com",
-		PasswordHash: "test-password",
-		Role:         "merchant",
-	}
+	// Setup Router
+	r := routes.SetupRouter(db, cfg)
 
-	err := userRepo.CreateUser(context.Background(), &user)
-	if err != nil {
-		fmt.Println("Error creating user:", err)
-		return
+	// Run Server
+	port := cfg.ServerPort
+	if cfg.DebugMode == "debug" {
+		fmt.Printf("Server starting on port %v...\n", port)
 	}
-	fmt.Println("user", user)
-	token, err := auth.GenerateToken(&user, cfg)
-	if err != nil {
-		fmt.Println("Error generating token:", err)
-		return
+	if err := r.Run(":" + port); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
 	}
-	fmt.Println("Generated token:", token)
-
-	err = auth.VerifyToken(token, cfg)
-	if err != nil {
-		fmt.Println("Error verifying token:", err)
-		return
-	}
-	fmt.Println("Token verified successfully")
-	fmt.Println("Extracted claims ...")
-	claims, err := auth.ExtractClaims(token, cfg)
-	if err != nil {
-		fmt.Println("Error extracting claims:", err)
-		return
-	}
-	fmt.Println("Extracted claims:", claims["user_id"])
-
 }

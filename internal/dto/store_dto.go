@@ -3,13 +3,13 @@ package dto
 import "github.com/google/uuid"
 
 type CreateStoreRequest struct {
-	Name       string
-	MerchantID uuid.UUID
+	Name       string    `json:"name"`
+	MerchantID uuid.UUID `json:"merchant_id"`
 }
 
 type StoreResponse struct {
-	ID         uuid.UUID
-	Name       string
-	MerchantID uuid.UUID
-	FAQs       []FAQResponse
+	ID         uuid.UUID     `json:"id"`
+	Name       string        `json:"name"`
+	MerchantID uuid.UUID     `json:"merchant_id"`
+	FAQs       []FAQResponse `json:"faqs"`
 }

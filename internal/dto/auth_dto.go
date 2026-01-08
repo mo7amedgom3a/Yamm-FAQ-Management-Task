@@ -3,18 +3,18 @@ package dto
 import "github.com/google/uuid"
 
 type SignupRequest struct {
-	Email    string
-	Password string
-	Role     string
+	Email    string `json:"email"`
+	Password string `json:"password"`
+	Role     string `json:"role"`
 }
 
 type LoginRequest struct {
-	Email    string
-	Password string
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type UserResponse struct {
-	ID    uuid.UUID
-	Email string
-	Role  string
+	ID    uuid.UUID `json:"id"`
+	Email string    `json:"email"`
+	Role  string    `json:"role"`
 }
