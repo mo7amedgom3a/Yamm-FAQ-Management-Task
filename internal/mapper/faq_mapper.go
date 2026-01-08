@@ -1,6 +1,7 @@
 package mapper
 
 import (
+	"github.com/google/uuid"
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/dto"
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/models"
 )
@@ -16,10 +17,12 @@ func NewFAQMapper(translationMapper *FAQTranslationMapper) *FAQMapper {
 }
 
 func (m *FAQMapper) ToModel(req dto.CreateFAQRequest) models.FAQ {
+	createdBy, _ := uuid.Parse(req.CreatedBy)
 	return models.FAQ{
 		CategoryID: req.CategoryID,
 		IsGlobal:   req.IsGlobal,
 		StoreID:    req.StoreID,
+		CreatedBy:  createdBy,
 	}
 }
 
