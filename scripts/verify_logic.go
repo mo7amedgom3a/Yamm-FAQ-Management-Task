@@ -18,9 +18,7 @@ import (
 )
 
 func TestLogic() {
-	// 1. Setup DB
 	cfg := config.LoadConfig()
-	// Hardcoding missing config fields for verification script or using defaults
 	dbUser := "postgres"
 	dbPort := "5432"
 
@@ -31,10 +29,8 @@ func TestLogic() {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	// AutoMigrate for testing
 	db.AutoMigrate(&models.User{}, &models.Store{}, &models.FAQCategory{}, &models.FAQ{}, &models.FAQTranslation{})
 
-	// Repos & Services
 	userRepo := repositories.NewUserRepository(db)
 	storeRepo := repositories.NewStoreRepository(db)
 	faqRepo := repositories.NewFaqRepository(db)
@@ -52,7 +48,6 @@ func TestLogic() {
 
 	ctx := context.Background()
 
-	// 2. Test Merchant Store Creation
 	merchantEmail := fmt.Sprintf("merchant_%d@test.com", time.Now().Unix())
 	merchantReq := dto.SignupRequest{
 		Email:    merchantEmail,
@@ -73,7 +68,6 @@ func TestLogic() {
 	}
 	fmt.Printf("Store created for merchant: %s\n", store.ID)
 
-	// 3. Test User Store Creation (Should NOT exist)
 	userEmail := fmt.Sprintf("user_%d@test.com", time.Now().Unix())
 	userReq := dto.SignupRequest{
 		Email:    userEmail,
@@ -92,8 +86,6 @@ func TestLogic() {
 	}
 	fmt.Println("Correctly confirmed no store for regular user.")
 
-	// 4. Test Multiple Translations
-	// Need Category and Creator first
 	fmt.Println("create category ...")
 	category := models.FAQCategory{ID: uuid.New(), Name: "General"}
 	if err := faqCategoryRepo.CreateFaqCategory(ctx, category); err != nil {
@@ -131,8 +123,6 @@ func TestLogic() {
 	}
 	fmt.Printf("Successfully retrieved %d translations for FAQ.\n", len(translations))
 
-	// 5. Test FAQ Filtering
-	// Create Global FAQ
 	globalFAQ := models.FAQ{
 		ID:         uuid.New(),
 		CategoryID: category.ID,
@@ -145,7 +135,6 @@ func TestLogic() {
 		log.Fatal(err)
 	}
 
-	// Get FAQs for Merchant Store (Should get Global + Store Specific)
 	faqs, err := faqService.GetAllFAQs(ctx, store.ID.String())
 	if err != nil {
 		log.Fatalf("Failed to get FAQs: %v", err)

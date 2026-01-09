@@ -13,6 +13,7 @@ type FAQService interface {
 	CreateFAQ(ctx context.Context, req dto.CreateFAQRequest) (dto.FAQResponse, error)
 	GetFAQ(ctx context.Context, id string) (dto.FAQResponse, error)
 	GetAllFAQs(ctx context.Context, storeID string) ([]dto.FAQResponse, error)
+	GetFAQsByStoreID(ctx context.Context, storeID string) ([]dto.FAQResponse, error)
 	UpdateFAQ(ctx context.Context, id string, req dto.CreateFAQRequest) (dto.FAQResponse, error)
 	DeleteFAQ(ctx context.Context, id string) error
 }
@@ -72,13 +73,25 @@ func (s *faqService) GetAllFAQs(ctx context.Context, storeID string) ([]dto.FAQR
 	return s.mapper.ToDTOs(faqs), nil
 }
 
+func (s *faqService) GetFAQsByStoreID(ctx context.Context, storeID string) ([]dto.FAQResponse, error) {
+	uid, err := uuid.Parse(storeID)
+	if err != nil {
+		return nil, err
+	}
+
+	faqs, err := s.repo.FindFaqsByStoreID(ctx, uid)
+	if err != nil {
+		return nil, err
+	}
+	return s.mapper.ToDTOs(faqs), nil
+}
+
 func (s *faqService) UpdateFAQ(ctx context.Context, id string, req dto.CreateFAQRequest) (dto.FAQResponse, error) {
 	uid, err := uuid.Parse(id)
 	if err != nil {
 		return dto.FAQResponse{}, err
 	}
 
-	// Check if exists
 	faq, err := s.repo.FindFaqByID(ctx, uid)
 	if err != nil {
 		return dto.FAQResponse{}, err

@@ -1,9 +1,10 @@
 package repositories
 
 import (
+	"context"
+
 	"github.com/google/uuid"
 	"gorm.io/gorm"
-	"context"
 
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/models"
 )
@@ -13,6 +14,7 @@ type FaqRepository interface {
 	FindFaqByID(ctx context.Context, id uuid.UUID) (models.FAQ, error)
 	FindFaqByName(ctx context.Context, name string) (models.FAQ, error)
 	FindFaqByStoreID(ctx context.Context, storeID uuid.UUID) (models.FAQ, error)
+	FindFaqsByStoreID(ctx context.Context, storeID uuid.UUID) ([]models.FAQ, error)
 	FindFaqByCategoryID(ctx context.Context, categoryID uuid.UUID) (models.FAQ, error)
 	FindGlobalAndStoreFAQs(ctx context.Context, storeID uuid.UUID) ([]models.FAQ, error)
 	UpdateFaq(ctx context.Context, faq models.FAQ) error
@@ -50,6 +52,13 @@ func (r *faqRepository) FindFaqByStoreID(ctx context.Context, storeID uuid.UUID)
 		return faq, err
 	}
 	return faq, nil
+}
+func (r *faqRepository) FindFaqsByStoreID(ctx context.Context, storeID uuid.UUID) ([]models.FAQ, error) {
+	var faqs []models.FAQ
+	if err := r.db.WithContext(ctx).Preload("Translations").Where("store_id = ?", storeID).Find(&faqs).Error; err != nil {
+		return nil, err
+	}
+	return faqs, nil
 }
 func (r *faqRepository) FindFaqByCategoryID(ctx context.Context, categoryID uuid.UUID) (models.FAQ, error) {
 	var faq models.FAQ

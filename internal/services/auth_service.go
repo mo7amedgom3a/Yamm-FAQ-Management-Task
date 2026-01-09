@@ -55,7 +55,17 @@ func (s *authService) Register(ctx context.Context, req dto.SignupRequest) (dto.
 
 	// Set default role if empty
 	if user.Role == "" {
-		user.Role = "user"
+		user.Role = "customer"
+	}
+
+	// Prevent admin role registration via public endpoint
+	if user.Role == "admin" {
+		return dto.UserResponse{}, errors.New("admin role can only be created by existing admins")
+	}
+
+	// Validate role is either customer or merchant
+	if user.Role != "customer" && user.Role != "merchant" {
+		return dto.UserResponse{}, errors.New("invalid role: must be 'customer' or 'merchant'")
 	}
 
 	err = s.userRepo.CreateUser(ctx, &user)

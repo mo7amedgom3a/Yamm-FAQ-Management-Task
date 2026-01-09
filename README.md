@@ -109,9 +109,10 @@ JWT_EXPIRATION_TIME=3600
 
 ## Docker
 
-Prerequisites: create a `.env` file (see "Environment Variables" above) with your DB and server settings.
+Prerequisites: create a `.env` file (see "Environment Variables" above or from `.env.example`) with your DB and server settings and Admin credentials.
 
-Quick start (recommended): this builds images and runs services defined in `docker-compose.yml`.
+Building and running with Docker Compose
+-------------------------------
 
 ```bash
 docker-compose up --build
@@ -125,8 +126,6 @@ docker run --rm -v "$PWD":/app -w /app --network Yamm-FAQ-Management-Task_app-ne
   -e DB_HOST=postgres -e DB_NAME=$DB_NAME -e DB_PASSWORD=$DB_PASSWORD golang:1.24 \
   go run scripts/seed_admin.go
 ```
-
-If you'd like, I can also run a local `docker-compose build migration` to verify the migration image builds correctly.
 
 ## Authentication
 
@@ -146,6 +145,7 @@ Authorization: Bearer <JWT_TOKEN>
 POST /api/auth/register
 ```
 
+
 **Request:**
 
 ```json
@@ -155,6 +155,7 @@ POST /api/auth/register
   "role": "merchant"
 }
 ```
+Note: The role can be either "customer" or "merchant". The "admin" role cannot be registered via this endpoint.
 
 **Response:**
 
@@ -370,10 +371,5 @@ DELETE /api/admin/faqs/:id
 POST /api/admin/translations
 PUT /api/admin/translations/:id
 DELETE /api/admin/translations/:id
-``` |
-
-## Testing & Validation
-
-- `scripts/verify_logic.go` – business logic checks
-- DTO validation inside handlers
-- Middleware-based request safety
+```
+---

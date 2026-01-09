@@ -31,7 +31,7 @@ func (r *faqCategoryRepository) CreateFaqCategory(ctx context.Context, faqCatego
 }
 func (r *faqCategoryRepository) FindFaqCategoryByID(ctx context.Context, id uuid.UUID) (models.FAQCategory, error) {
 	var faqCategory models.FAQCategory
-	if err := r.db.WithContext(ctx).Where("id = ?", id).First(&faqCategory).Error; err != nil {
+	if err := r.db.WithContext(ctx).Preload("FAQs").Where("id = ?", id).First(&faqCategory).Error; err != nil {
 		return faqCategory, err
 	}
 	return faqCategory, nil
@@ -46,7 +46,7 @@ func (r *faqCategoryRepository) FindFaqCategoryByName(ctx context.Context, name 
 
 func (r *faqCategoryRepository) FindAllFaqCategories(ctx context.Context) ([]models.FAQCategory, error) {
 	var faqCategories []models.FAQCategory
-	if err := r.db.WithContext(ctx).Find(&faqCategories).Error; err != nil {
+	if err := r.db.WithContext(ctx).Preload("FAQs").Find(&faqCategories).Error; err != nil {
 		return nil, err
 	}
 	return faqCategories, nil

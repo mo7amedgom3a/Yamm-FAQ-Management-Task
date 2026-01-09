@@ -31,9 +31,9 @@ func SetupRouter(db *gorm.DB, cfg *config.Config) *gin.Engine {
 	// Mappers
 	userMapper := &mapper.UserMapper{}
 	storeMapper := &mapper.StoreMapper{}
-	faqMapper := &mapper.FAQMapper{}
-	faqCategoryMapper := &mapper.FAQCategoryMapper{}
 	faqTranslationMapper := &mapper.FAQTranslationMapper{}
+	faqMapper := mapper.NewFAQMapper(faqTranslationMapper)
+	faqCategoryMapper := mapper.NewFAQCategoryMapper(faqMapper)
 
 	// Services
 	authService := services.NewAuthService(userRepo, storeRepo, cfg, userMapper, storeMapper)
@@ -64,6 +64,7 @@ func SetupRouter(db *gorm.DB, cfg *config.Config) *gin.Engine {
 		// Public FAQ Routes
 		api.GET("/faqs", faqHandler.GetAllFAQs)
 		api.GET("/faqs/:id", faqHandler.GetFAQ)
+		api.GET("/stores/:store_id/faqs", faqHandler.GetFAQsByStoreID)
 		api.GET("/categories", faqCategoryHandler.GetAllCategories)
 		api.GET("/categories/:id", faqCategoryHandler.GetCategory)
 		api.GET("/translations/:id", faqTranslationHandler.GetTranslation)

@@ -75,6 +75,16 @@ func (h *FAQHandler) GetAllFAQs(c *gin.Context) {
 	c.JSON(http.StatusOK, res)
 }
 
+func (h *FAQHandler) GetFAQsByStoreID(c *gin.Context) {
+	storeID := c.Param("store_id")
+	res, err := h.faqService.GetFAQsByStoreID(c.Request.Context(), storeID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, res)
+}
+
 func (h *FAQHandler) UpdateFAQ(c *gin.Context) {
 	id := c.Param("id")
 	var req dto.CreateFAQRequest
