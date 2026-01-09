@@ -7,20 +7,18 @@ import (
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/config"
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/database"
 	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/internal/routes"
+	"github.com/mo7amedgom3a/Yamm-FAQ-Management-Task/scripts"
 )
 
 func main() {
-	// Load Config
+	scripts.SeedAdmin()
 	cfg := config.LoadConfig()
 
-	// Connect to Database
 	database.ConnectDB(cfg)
 	db := database.DB
 
-	// Setup Router
 	r := routes.SetupRouter(db, cfg)
 
-	// Run Server
 	port := cfg.ServerPort
 	if cfg.DebugMode == "debug" {
 		fmt.Printf("Server starting on port %v...\n", port)

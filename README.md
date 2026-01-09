@@ -117,16 +117,6 @@ Building and running with Docker Compose
 ```bash
 docker-compose up --build
 ```
-
-Seeding an admin user
----------------------
-
-```bash
-docker run --rm -v "$PWD":/app -w /app --network Yamm-FAQ-Management-Task_app-network \
-  -e DB_HOST=postgres -e DB_NAME=$DB_NAME -e DB_PASSWORD=$DB_PASSWORD golang:1.24 \
-  go run scripts/seed_admin.go
-```
-
 ## Authentication
 
 JWT-based authentication. Token must be sent in headers:
