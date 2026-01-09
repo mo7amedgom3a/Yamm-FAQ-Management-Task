@@ -1,0 +1,539 @@
+{
+	"info": {
+		"_postman_id": "5b3ddce5-1ccb-466f-b1cd-8c9725c96247",
+		"name": "YammCollectionAPIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34564741",
+		"_collection_link": "https://lively-rocket-111322.postman.co/workspace/My-Workspace~1faf527d-75ef-43b2-856e-df2bd1c01ae6/collection/34564741-5b3ddce5-1ccb-466f-b1cd-8c9725c96247?action=share&source=collection_link&creator=34564741"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"mohamed_test@gmail.com\",\n  \"password\": \"password123\",\n  \"role\": \"merchant\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories (Admin)",
+			"item": [
+				{
+					"name": "create category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Problems\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/categories/{{category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"categories",
+								"{{category_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories Public",
+			"item": [
+				{
+					"name": "Categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Categorie",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/3d8f33c7-3cca-4994-8f9b-2ca6c3b034ca",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"3d8f33c7-3cca-4994-8f9b-2ca6c3b034ca"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Store (Merchant)",
+			"item": [
+				{
+					"name": "Get My Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stores/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"My Awesome Store\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/stores/me",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FAQs",
+			"item": [
+				{
+					"name": "Create Global FAQ (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category_id\": \"{{category_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/faqs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"faqs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Store FAQ",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category_id\": \"{{category_id}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/merchant/faqs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"merchant",
+								"faqs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All FAQs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/faqs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single FAQ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/faqs/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get faqs by store",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/stores/{{store_id}}/faqs",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stores",
+								"{{store_id}}",
+								"faqs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update FAQ mechant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category_id\": \"c210a22f-90b2-41d8-870a-92c0e4e179eb\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/merchant/faqs/{{faq_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"merchant",
+								"faqs",
+								"{{faq_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FAQ Translations",
+			"item": [
+				{
+					"name": "Add Translation (Admin)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImV4cCI6MTc2Nzg5NDcxNSwicm9sZSI6ImFkbWluIiwidXNlcl9pZCI6IjIyNGI4MDcyLTEwZDctNDUzZC1hN2UyLTYzOTQ5MWVjMzFkNyJ9.ebCXhWBx9UfexPw-XqfByk7QSbr9iMcChqlrPIS0rkE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"faq_id\": \"{{faq_id}}\",\n  \"language\": \"en\",\n  \"question\": \"How do I reset my password?\",\n  \"answer\": \"Click on forgot password.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/admin/translations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Translation (Merchant)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"faq_id\": \"{{faq_id}}\",\n  \"language\": \"ar\",\n  \"question\": \"كيفية تغير الرقم السري\",\n  \"answer\": \"نسيت كلمة المرور\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/merchant/faqs/translations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"merchant",
+								"faqs",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Translations by FAQ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/faqs/{{faq_id}}/translations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"faqs",
+								"{{faq_id}}",
+								"translations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get translation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/translations/{{translation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"translations",
+								"{{translation_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
