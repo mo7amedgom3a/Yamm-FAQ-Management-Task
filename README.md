@@ -363,3 +363,8 @@ PUT /api/admin/translations/:id
 DELETE /api/admin/translations/:id
 ```
 ---
+## Testing
+
+```bash
+go test ./internal/tests/...
+```
